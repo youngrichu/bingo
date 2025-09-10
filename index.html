@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 Interactive Bingo</title>
+    <style>
+        @font-face {
+            font-family: 'Suisse';
+            src: url('https://static1.squarespace.com/static/6859c28ee6cf264eaaa6ca32/t/6893b932debf304c828946a9/1754511666357/SuisseWorks-Medium-WebS.woff2') format('woff2');
+            font-style: normal;
+            font-weight: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Suisse', 'Arial', sans-serif;
+            background: #30302d;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 160px 30px, #fff, transparent),
+                radial-gradient(1px 1px at 200px 90px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 240px 50px, #eee, transparent),
+                radial-gradient(1px 1px at 280px 10px, #fff, transparent),
+                radial-gradient(1px 1px at 320px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 360px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 400px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 440px 20px, #eee, transparent),
+                radial-gradient(2px 2px at 480px 60px, #fff, transparent),
+                radial-gradient(1px 1px at 520px 90px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 560px 30px, #fff, transparent),
+                radial-gradient(2px 2px at 600px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 640px 10px, #eee, transparent),
+                radial-gradient(1px 1px at 680px 50px, #fff, transparent),
+                radial-gradient(2px 2px at 720px 80px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 760px 40px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 800px 100px;
+            animation: starfield 200s linear infinite;
+            z-index: -3;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 300%;
+            height: 300%;
+            background: 
+                radial-gradient(1px 1px at 25px 25px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 75px 75px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 125px 125px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 175px 175px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(1px 1px at 225px 25px, rgba(255,255,255,0.9), transparent),
+                radial-gradient(2px 2px at 275px 75px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 325px 125px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 375px 175px, rgba(255,255,255,0.6), transparent);
+            background-size: 400px 200px;
+            animation: starfield-slow 300s linear infinite reverse;
+            z-index: -2;
+        }
+
+        @keyframes starfield {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-800px); }
+        }
+
+        @keyframes starfield-slow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-400px, -200px); }
+        }
+
+        @keyframes starfield-fast {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-600px, -300px); }
+        }
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #96309a;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: #37aa97;
+            margin-bottom: 20px;
+        }
+
+        .bingo-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 30px;
+            border: 3px solid #96309a;
+            border-radius: 15px;
+            padding: 15px;
+            background: #fafafa;
+        }
+
+        .bingo-cell {
+            aspect-ratio: 1;
+            border: 2px solid #96309a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: #30302d;
+            padding: 8px;
+            min-height: 80px;
+        }
+
+        .bingo-cell:hover {
+            background: rgba(150, 48, 154, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(150, 48, 154, 0.3);
+        }
+
+        .bingo-cell.marked {
+            background: #96309a;
+            color: white;
+            transform: scale(0.95);
+        }
+
+        .bingo-cell.free {
+            background: #37aa97;
+            color: white;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #96309a;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #7a2580;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #37aa97;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #2d8a7a;
+            transform: translateY(-2px);
+        }
+
+        .status {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #30302d;
+            margin-top: 20px;
+        }
+
+        .win-message {
+            background: #37aa97;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: celebration 0.5s ease-in-out;
+        }
+
+        @keyframes celebration {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #96309a;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title">2025</div>
+            <div class="subtitle">BINGO</div>
+        </div>
+        
+        <div class="bingo-grid" id="bingoGrid">
+            <!-- Grid cells will be generated by JavaScript -->
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-primary" onclick="newGame()">New Game</button>
+            <button class="btn btn-secondary" onclick="resetBoard()">Reset Board</button>
+        </div>
+        
+        <div class="status" id="status">Click squares to mark them!</div>
+    </div>
+
+    <script>
+        // Bingo activities based on your image
+        const bingoActivities = [
+            "MUSICAL", "EDGE EXPERIMENT", "MOTOR SPORT FUN", "SELF CARE DAY (NO WORK)", "REN FAIRE",
+            "VOLUNTEER MORE", "PASTA FROM SCRATCH", "FIND LOVE", "MAKE AFTER ART", "FAMILY BALANCE",
+            "LEARN DANCE", "CAMPING", "FREE SPACE", "TRAVEL", "30 EVENTS",
+            "POP UP DINNER", "TRY SHROOMS", "MOVE OUT", "COMEDY SHOW", "ARCHERY",
+            "MAKE A SCULPTURE", "RETREAT", "NEW DRAGON", "PARK PICNICS", "DESIGN BOARD GAME"
+        ];
+
+        let currentBoard = [];
+        let markedCells = new Set();
+        let gameWon = false;
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function generateBoard() {
+            const shuffled = shuffleArray(bingoActivities);
+            currentBoard = shuffled.slice(0, 25);
+            // Ensure center is free space
+            currentBoard[12] = "FREE SPACE";
+            return currentBoard;
+        }
+
+        function createGrid() {
+            const grid = document.getElementById('bingoGrid');
+            grid.innerHTML = '';
+            
+            generateBoard();
+            
+            currentBoard.forEach((activity, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'bingo-cell';
+                cell.textContent = activity;
+                cell.dataset.index = index;
+                
+                if (index === 12) { // Free space
+                    cell.classList.add('free', 'marked');
+                    markedCells.add(12);
+                }
+                
+                cell.addEventListener('click', () => toggleCell(index));
+                grid.appendChild(cell);
+            });
+        }
+
+        function toggleCell(index) {
+            if (gameWon) return;
+            
+            const cell = document.querySelector(`[data-index="${index}"]`);
+            
+            if (markedCells.has(index)) {
+                markedCells.delete(index);
+                cell.classList.remove('marked');
+            } else {
+                markedCells.add(index);
+                cell.classList.add('marked');
+            }
+            
+            checkForWin();
+        }
+
+        function checkForWin() {
+            const winPatterns = [
+                // Rows
+                [0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 13, 14], [15, 16, 17, 18, 19], [20, 21, 22, 23, 24],
+                // Columns
+                [0, 5, 10, 15, 20], [1, 6, 11, 16, 21], [2, 7, 12, 17, 22], [3, 8, 13, 18, 23], [4, 9, 14, 19, 24],
+                // Diagonals
+                [0, 6, 12, 18, 24], [4, 8, 12, 16, 20]
+            ];
+
+            for (const pattern of winPatterns) {
+                if (pattern.every(index => markedCells.has(index))) {
+                    celebrateWin();
+                    return;
+                }
+            }
+        }
+
+        function celebrateWin() {
+            gameWon = true;
+            const status = document.getElementById('status');
+            status.innerHTML = '<div class="win-message">🎉 BINGO! You Win! 🎉</div>';
+            
+            // Add confetti effect
+            createConfetti();
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = ['#96309a', '#37aa97', '#30302d', '#ffffff', '#cccccc'][Math.floor(Math.random() * 5)];
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        function newGame() {
+            markedCells.clear();
+            gameWon = false;
+            document.getElementById('status').textContent = 'Click squares to mark them!';
+            createGrid();
+        }
+
+        function resetBoard() {
+            markedCells.clear();
+            markedCells.add(12); // Keep free space marked
+            gameWon = false;
+            document.getElementById('status').textContent = 'Click squares to mark them!';
+            
+            document.querySelectorAll('.bingo-cell').forEach((cell, index) => {
+                if (index === 12) {
+                    cell.classList.add('marked', 'free');
+                } else {
+                    cell.classList.remove('marked');
+                }
+            });
+        }
+
+        // Initialize the game
+        createGrid();
+    </script>
+</body>
+</html>
