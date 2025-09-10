@@ -21,84 +21,113 @@
 
         body {
             font-family: 'Suisse', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            background: #30302d;
+            margin: 0;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            position: relative;
+            background: #0a0a2a;
             overflow: hidden;
+            perspective: 1000px;
+            padding: 20px;
         }
 
-        body::before {
-            content: '';
+        /* Space background */
+        .space-background {
             position: fixed;
             top: 0;
             left: 0;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(2px 2px at 20px 30px, #eee, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(2px 2px at 160px 30px, #fff, transparent),
-                radial-gradient(1px 1px at 200px 90px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(2px 2px at 240px 50px, #eee, transparent),
-                radial-gradient(1px 1px at 280px 10px, #fff, transparent),
-                radial-gradient(1px 1px at 320px 70px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(2px 2px at 360px 40px, #fff, transparent),
-                radial-gradient(1px 1px at 400px 80px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1px 1px at 440px 20px, #eee, transparent),
-                radial-gradient(2px 2px at 480px 60px, #fff, transparent),
-                radial-gradient(1px 1px at 520px 90px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1px 1px at 560px 30px, #fff, transparent),
-                radial-gradient(2px 2px at 600px 70px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 640px 10px, #eee, transparent),
-                radial-gradient(1px 1px at 680px 50px, #fff, transparent),
-                radial-gradient(2px 2px at 720px 80px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1px 1px at 760px 40px, #fff, transparent);
-            background-repeat: repeat;
-            background-size: 800px 100px;
-            animation: starfield 200s linear infinite;
-            z-index: -3;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(
+                    circle at 30% 30%,
+                    rgba(45, 85, 255, 0.15) 0%,
+                    transparent 60%
+                ),
+                radial-gradient(
+                    circle at 70% 70%,
+                    rgba(255, 85, 85, 0.15) 0%,
+                    transparent 60%
+                );
+            overflow: hidden;
+            animation: backgroundPulse 10s ease-in-out infinite;
+            mix-blend-mode: screen;
         }
 
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 300%;
-            height: 300%;
-            background: 
-                radial-gradient(1px 1px at 25px 25px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(1px 1px at 75px 75px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(2px 2px at 125px 125px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 175px 175px, rgba(255,255,255,0.6), transparent),
-                radial-gradient(1px 1px at 225px 25px, rgba(255,255,255,0.9), transparent),
-                radial-gradient(2px 2px at 275px 75px, rgba(255,255,255,0.7), transparent),
-                radial-gradient(1px 1px at 325px 125px, rgba(255,255,255,0.8), transparent),
-                radial-gradient(1px 1px at 375px 175px, rgba(255,255,255,0.6), transparent);
-            background-size: 400px 200px;
-            animation: starfield-slow 300s linear infinite reverse;
-            z-index: -2;
+        /* Stars */
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration) ease-in-out infinite;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
         }
 
-        @keyframes starfield {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-800px); }
+        /* Comets */
+        .comet {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            filter: blur(0.5px);
+            animation: cometMove 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .comet::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(to left, white, transparent);
+            transform: translateY(-50%);
+            filter: blur(0.5px);
         }
 
-        @keyframes starfield-slow {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-400px, -200px); }
+        /* Key animations */
+
+        /* Background pulse */
+        @keyframes backgroundPulse {
+            0%,
+            100% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 1;
+            }
         }
 
-        @keyframes starfield-fast {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-600px, -300px); }
+        /* Twinkling stars */
+        @keyframes twinkle {
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+                filter: blur(1px);
+            }
+        }
+
+        /* Comet */
+        @keyframes cometMove {
+            0% {
+                opacity: 0;
+                transform: translate(-100%, -100%) rotate(45deg) scale(0.5);
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(100vw, 100vh) rotate(45deg) scale(1.5);
+            }
         }
         .container {
             background: white;
@@ -107,6 +136,8 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             max-width: 800px;
             width: 100%;
+            position: relative;
+            z-index: 1;
         }
 
         .header {
@@ -268,6 +299,8 @@
     </style>
 </head>
 <body>
+    <div class="space-background" id="spaceBackground"></div>
+    
     <div class="container">
         <div class="header">
             <div class="title">2025</div>
@@ -299,6 +332,56 @@
         let currentBoard = [];
         let markedCells = new Set();
         let gameWon = false;
+
+        /**
+         * Creates random stars in the background
+         */
+        function createStars() {
+            const background = document.getElementById("spaceBackground");
+            const numberOfStars = 100;
+
+            for (let i = 0; i < numberOfStars; i++) {
+                const star = document.createElement("div");
+                star.className = "star";
+                // Random placement
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                // Random size
+                const size = Math.random() * 2 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                // Random animation duration
+                star.style.setProperty("--duration", `${Math.random() * 3 + 2}s`);
+
+                background.appendChild(star);
+            }
+        }
+
+        /**
+         * Creates a comet effect
+         */
+        function createComet() {
+            const background = document.getElementById("spaceBackground");
+            const comet = document.createElement("div");
+            comet.className = "comet";
+
+            // Random starting position (horizontal)
+            const startPos = Math.random() * 100;
+            comet.style.left = `${startPos}%`;
+            comet.style.top = "0";
+
+            background.appendChild(comet);
+
+            // Cleanup
+            setTimeout(() => comet.remove(), 3000);
+        }
+
+        /**
+         * Launches comet appearances at regular intervals
+         */
+        function initComets() {
+            setInterval(createComet, 4000);
+        }
 
         function shuffleArray(array) {
             const shuffled = [...array];
@@ -420,7 +503,9 @@
             });
         }
 
-        // Initialize the game
+        /* Initializations */
+        createStars();
+        initComets();
         createGrid();
     </script>
 </body>
