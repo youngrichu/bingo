@@ -57,7 +57,7 @@
         /* Stars */
         .star {
             position: absolute;
-            background: #fff8f5;
+            background: white;
             border-radius: 50%;
             animation: twinkle var(--duration) ease-in-out infinite;
             box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
@@ -130,9 +130,7 @@
             }
         }
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: white;
             border-radius: 20px;
             padding: 40px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
@@ -169,8 +167,7 @@
             border: 3px solid #96309a;
             border-radius: 15px;
             padding: 25px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: #fafafa;
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
@@ -178,7 +175,7 @@
 
         .bingo-cell {
             min-height: 100px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid #96309a;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -188,9 +185,8 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            color: #fff8f5;
+            background: white;
+            color: #30302d;
             padding: 16px;
             width: 100%;
             max-width: 100%;
@@ -202,22 +198,20 @@
         }
 
         .bingo-cell:hover {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(15px);
+            background: rgba(150, 48, 154, 0.1);
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(150, 48, 154, 0.3);
         }
 
         .bingo-cell.marked {
-            background: rgba(150, 48, 154, 0.8);
-            backdrop-filter: blur(10px);
-            color: #fff8f5;
+            background: #96309a;
+            color: white;
             transform: scale(0.95);
         }
 
         .bingo-cell.free {
             background: #37aa97;
-            color: #fff8f5;
+            color: white;
             font-weight: bold;
         }
 
@@ -240,7 +234,7 @@
 
         .btn-primary {
             background: #96309a;
-            color: #fff8f5;
+            color: white;
         }
 
         .btn-primary:hover {
@@ -250,7 +244,7 @@
 
         .btn-secondary {
             background: #37aa97;
-            color: #fff8f5;
+            color: white;
         }
 
         .btn-secondary:hover {
@@ -262,13 +256,13 @@
             text-align: center;
             font-size: 1.2rem;
             font-weight: 600;
-            color: #fff8f5;
+            color: #30302d;
             margin-top: 20px;
         }
 
         .win-message {
             background: #37aa97;
-            color: #fff8f5;
+            color: white;
             padding: 15px;
             border-radius: 10px;
             text-align: center;
@@ -300,188 +294,6 @@
             100% {
                 transform: translateY(100vh) rotate(720deg);
                 opacity: 0;
-            }
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-                overflow-x: hidden;
-            }
-
-            .container {
-                padding: 20px;
-                margin: 0;
-                border-radius: 15px;
-                max-width: 100%;
-                width: 100%;
-            }
-
-            .title {
-                font-size: 2.5rem;
-                margin-bottom: 8px;
-            }
-
-            .subtitle {
-                font-size: 1.2rem;
-                margin-bottom: 15px;
-            }
-
-            .header {
-                margin-bottom: 20px;
-            }
-
-            .bingo-grid {
-                gap: 8px;
-                padding: 15px;
-                border-radius: 10px;
-                margin-bottom: 20px;
-            }
-
-            .bingo-cell {
-                min-height: 70px;
-                font-size: 0.7rem;
-                padding: 8px;
-                border-radius: 8px;
-                line-height: 1.1;
-            }
-
-            .bingo-cell:hover {
-                transform: scale(1.02);
-            }
-
-            .controls {
-                flex-direction: column;
-                gap: 10px;
-                margin-bottom: 15px;
-            }
-
-            .btn {
-                padding: 14px 20px;
-                font-size: 1rem;
-                width: 100%;
-            }
-
-            .status {
-                font-size: 1rem;
-                margin-top: 15px;
-            }
-
-            .win-message {
-                font-size: 1.2rem;
-                padding: 12px;
-                margin-top: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 5px;
-            }
-
-            .container {
-                padding: 15px;
-                border-radius: 10px;
-            }
-
-            .title {
-                font-size: 2rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
-
-            .bingo-grid {
-                gap: 6px;
-                padding: 10px;
-            }
-
-            .bingo-cell {
-                min-height: 60px;
-                font-size: 0.65rem;
-                padding: 6px;
-                border-width: 1px;
-            }
-
-            .btn {
-                padding: 12px 16px;
-                font-size: 0.9rem;
-            }
-
-            .status {
-                font-size: 0.9rem;
-            }
-
-            .win-message {
-                font-size: 1.1rem;
-                padding: 10px;
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .container {
-                max-width: 700px;
-                padding: 35px;
-            }
-
-            .title {
-                font-size: 2.8rem;
-            }
-
-            .subtitle {
-                font-size: 1.4rem;
-            }
-
-            .bingo-cell {
-                min-height: 90px;
-                font-size: 0.8rem;
-                padding: 12px;
-            }
-        }
-
-        @media (orientation: landscape) and (max-height: 600px) {
-            body {
-                padding: 5px;
-            }
-
-            .container {
-                padding: 15px;
-            }
-
-            .header {
-                margin-bottom: 15px;
-            }
-
-            .title {
-                font-size: 2rem;
-                margin-bottom: 5px;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-                margin-bottom: 10px;
-            }
-
-            .bingo-grid {
-                margin-bottom: 15px;
-                padding: 10px;
-            }
-
-            .bingo-cell {
-                min-height: 50px;
-                font-size: 0.6rem;
-                padding: 4px;
-            }
-
-            .controls {
-                margin-bottom: 10px;
-            }
-
-            .btn {
-                padding: 8px 16px;
-                font-size: 0.8rem;
             }
         }
     </style>
